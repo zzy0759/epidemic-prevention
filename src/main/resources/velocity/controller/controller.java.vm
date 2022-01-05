@@ -1,0 +1,79 @@
+package ${package}.controller;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${reference}.response.Result;
+import ${package}.entity.${ClassName};
+import ${package}.service.${ClassName}Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Api(tags = "${ClassName}")
+@RestController
+@RequestMapping("/${classname}")
+public class ${ClassName}Controller {
+    @Autowired
+    private ${ClassName}Service ${classname}Service;
+
+    @ApiOperation("分页查询")
+    @GetMapping("/page")
+    @Deprecated
+    public Result<IPage<${ClassName}>> get${ClassName}Page(
+        @RequestParam(name = "current", defaultValue = "1") Integer current,
+        @RequestParam(name = "size", defaultValue = "10") Integer size,
+        ${ClassName} ${classname}) {
+        IPage<$ClassName> ${classname}Page=${classname}Service.get${ClassName}Page(current,size,${classname});
+        return Result.OK(${classname}Page);
+    }
+
+    @ApiOperation("修改")
+    @PutMapping
+    @Deprecated
+    public Result<${ClassName}> update(@Validated(${ClassName}.update.class) @RequestBody ${ClassName} ${classname}) {
+        ${classname}Service.updateById(${classname});
+        return Result.OK();
+    }
+
+    @ApiOperation("新增")
+    @PostMapping
+    @Deprecated
+    public Result<Object> add(@Validated(${ClassName}.insert.class) @RequestBody ${ClassName} ${classname}) {
+        ${classname}Service.save(${classname});
+        return Result.OK();
+    }
+
+    @ApiOperation("通过id查询")
+    @GetMapping("/id")
+    @Deprecated
+    public Result<${ClassName}> getById(@RequestParam String id){
+        $ClassName $classname=${classname}Service.getById(id);
+        return Result.OK($classname);
+    }
+
+    @ApiOperation("查询所有")
+    @GetMapping
+    @Deprecated
+    public Result<List<${ClassName}>> getAll(${ClassName} ${classname}){
+        List<${ClassName}> ${classname}List=${classname}Service.getAll(${classname});
+        return Result.OK(${classname}List);
+    }
+
+    @ApiOperation("通过id删除")
+    @DeleteMapping("/id")
+    @Deprecated
+    public Result<Object> deleteById(@RequestParam String id){
+        return ${classname}Service.deleteById(id);
+    }
+
+    @ApiOperation("批量删除")
+    @DeleteMapping("/batch")
+    @Deprecated
+    public Result<Object> batchDelete(@RequestParam List<String> ids){
+        return ${classname}Service.batchDelete(ids);
+    }
+}

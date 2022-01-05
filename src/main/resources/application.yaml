@@ -1,0 +1,38 @@
+server:
+  port: 8072
+spring:
+  mvc:
+    pathmatch:
+      #springboot2.6.0???springfox?????
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://101.34.177.242:3306/prevention?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: UUID
+      capital-mode: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      logic-delete-field: isDelete
+    refresh: true
+  type-aliases-package: com.example.epidemicprevention.module
+  mapper-locations: classpath*:mybatis/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+jwt:
+  secret: kbj3f23oij44f3jf9pj3x6
+  subject: zzy
+  jwt_iss: zzy

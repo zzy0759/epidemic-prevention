@@ -1,0 +1,49 @@
+package ${package}.service;
+
+import ${reference}.response.Result;
+import ${package}.entity.${ClassName};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
+/**
+ * <p>
+ * ${ClassName}服务类
+ * </p>
+ *
+ * @author zzy
+ * @date $date
+ */
+public interface ${ClassName}Service extends IService<${ClassName}> {
+
+    /**
+    * 分页查询
+    * @param current：页码
+    * @param size：每页条数
+    * @param ${classname}：筛选条件
+    * @return IPage<${ClassName}>
+    */
+    IPage<$ClassName> get${ClassName}Page(Integer current,Integer size,${ClassName} ${classname});
+
+    /**
+    * 查询所有
+    * @param ${classname}：筛选条件
+    * @return List<${ClassName}>
+    */
+    List<${ClassName}> getAll(${ClassName} ${classname});
+
+    /**
+    * 通过id删除
+    * @param id：${classname}Id
+    * @return Result<Object>
+    */
+    Result<Object> deleteById(String id);
+
+    /**
+    * 批量删除
+    * @param ids：id列表
+    * @return Result<Object>
+    */
+    Result<Object> batchDelete(List<String> ids);
+}
