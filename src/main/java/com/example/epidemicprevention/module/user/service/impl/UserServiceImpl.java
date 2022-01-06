@@ -78,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //fixme java还能这样写?奇怪的知识又增加了
         val id = userChangePasswordVo.getId();
         val user = userMapper.selectById(id);
-        if (!passwordEncoder.matches(userChangePasswordVo.getOldPassword(),user.getPassword())){
+        if (!passwordEncoder.matches(userChangePasswordVo.getOldPassword(), user.getPassword())) {
             return Result.error(ResponseState.PASSWORD_IS_ERROR);
         }
         user.setPassword(passwordEncoder.encode(userChangePasswordVo.getNewPassword()));
@@ -93,14 +93,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (count != 0) {
             return Result.error(ResponseState.USERNAME_IS_EXIST);
         }
-        User user = new User(username, passwordEncoder.encode(addUserVo.getPassword()));
+        String password;
+        if (addUserVo.getPassword() == null) {
+            password = passwordEncoder.encode(User.DEFAULT_PASSWORD);
+        } else {
+            password = passwordEncoder.encode(addUserVo.getPassword());
+        }
+        User user = new User(username, password);
         userMapper.insert(user);
         return Result.OK();
     }
 
     @Override
     public Result<Object> changeUserInfo(ChangeUserInfoVo changeUserInfoVo) {
-        User user=new User();
+        User user = new User();
         user.setId(changeUserInfoVo.getId());
         user.setPassword(passwordEncoder.encode(changeUserInfoVo.getPassword()));
         userMapper.updateById(user);

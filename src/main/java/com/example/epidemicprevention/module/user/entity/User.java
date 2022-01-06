@@ -36,6 +36,7 @@ public class User {
     public static int SUPER_NUMBER = 2;
     public static String NORMAL_ROLE = "NORMAL";
     public static String SUPER_ROLE = "SUPER";
+    public static String DEFAULT_PASSWORD = "abc123456";
 
     @ApiModelProperty(value = "用户表")
     @TableId(type = IdType.UUID)

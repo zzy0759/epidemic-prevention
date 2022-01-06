@@ -26,7 +26,7 @@ public class WrapperUtils {
     }
 
     public static <T> LambdaQueryWrapper<T> getLambdaQueryWrapper(SFunction<T, ?> column, Object value) {
-        return getLambdaQueryWrapper(true,column,value);
+        return getLambdaQueryWrapper(true, column, value);
     }
 
     public static <T> LambdaQueryWrapper<T> getLambdaQueryWrapper(boolean condition, SFunction<T, ?> column, Object value) {
