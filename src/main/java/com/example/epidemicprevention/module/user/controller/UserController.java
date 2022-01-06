@@ -34,7 +34,7 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     @UnLogin
-    Result<Object> login(UserLoginVo userLoginVo){
+    Result<Object> login(@RequestBody UserLoginVo userLoginVo){
         return userService.login(userLoginVo);
     }
 
