@@ -63,7 +63,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return Result.error(ResponseState.USER_NOT_EXIST);
         }
         final User user = userList.get(0);
-        if (user.getStatus() != User.INVALID_STATUS) {
+        if (user.getStatus() != User.VALID_STATUS) {
             return Result.error(ResponseState.USER_STATUS_INVALID);
         }
         if (!passwordEncoder.matches(userLoginVo.getPassword(), user.getPassword())) {
