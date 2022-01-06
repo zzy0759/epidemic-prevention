@@ -1,5 +1,9 @@
 package com.example.epidemicprevention.module.user.service;
 
+import com.example.epidemicprevention.module.user.vo.AddUserVo;
+import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVo;
+import com.example.epidemicprevention.module.user.vo.UserChangePasswordVo;
+import com.example.epidemicprevention.module.user.vo.UserLoginVo;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.user.entity.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,34 +20,77 @@ import java.util.List;
  * @date 2022-01-05
  */
 public interface UserService extends IService<User> {
+    /**
+     * 登录
+     *
+     * @param userLoginVo
+     * @return
+     */
+    Result<Object> login(UserLoginVo userLoginVo);
 
     /**
-    * 分页查询
-    * @param current：页码
-    * @param size：每页条数
-    * @param user：筛选条件
-    * @return IPage<User>
-    */
-    IPage<User> getUserPage(Integer current,Integer size,User user);
+     * 修改密码
+     *
+     * @param userChangePasswordVo
+     * @return
+     */
+    Result<Object> changePassword(UserChangePasswordVo userChangePasswordVo);
 
     /**
-    * 查询所有
-    * @param user：筛选条件
-    * @return List<User>
-    */
+     * 添加用户
+     *
+     * @param addUserVo
+     * @return
+     */
+    Result<Object> addUser(AddUserVo addUserVo);
+
+    /**
+     * 修改用户信息
+     *
+     * @param changeUserInfoVo
+     * @return
+     */
+    Result<Object> changeUserInfo(ChangeUserInfoVo changeUserInfoVo);
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
+    Result<Object> deleteUser(String id);
+
+    /**
+     * 分页查询
+     *
+     * @param current：页码
+     * @param size：每页条数
+     * @param user：筛选条件
+     * @return IPage<User>
+     */
+    IPage<User> getUserPage(Integer current, Integer size, User user);
+
+    /**
+     * 查询所有
+     *
+     * @param user：筛选条件
+     * @return List<User>
+     */
     List<User> getAll(User user);
 
     /**
-    * 通过id删除
-    * @param id：userId
-    * @return Result<Object>
-    */
+     * 通过id删除
+     *
+     * @param id：userId
+     * @return Result<Object>
+     */
     Result<Object> deleteById(String id);
 
     /**
-    * 批量删除
-    * @param ids：id列表
-    * @return Result<Object>
-    */
+     * 批量删除
+     *
+     * @param ids：id列表
+     * @return Result<Object>
+     */
     Result<Object> batchDelete(List<String> ids);
 }

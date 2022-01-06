@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,14 +19,23 @@ import java.sql.Timestamp;
  * @date 2022-01-05
  */
 @Data
+@AllArgsConstructor
 @TableName("user")
 public class User {
 
-public interface insert {
-}
 
-public interface update {
-}
+    public interface insert {
+    }
+
+    public interface update {
+    }
+
+    public static int VALID_STATUS = 1;
+    public static int INVALID_STATUS = 0;
+    public static int NORMAL_NUMBER = 1;
+    public static int SUPER_NUMBER = 2;
+    public static String NORMAL_ROLE = "NORMAL";
+    public static String SUPER_ROLE = "SUPER";
 
     @ApiModelProperty(value = "用户表")
     @TableId(type = IdType.UUID)
@@ -43,5 +53,11 @@ public interface update {
     @ApiModelProperty(value = "1普通2超级")
     private Integer state;
 
+    public User() {
+    }
 
+    public User(String username, String encodedPassword) {
+        this.username = username;
+        this.password = encodedPassword;
+    }
 }

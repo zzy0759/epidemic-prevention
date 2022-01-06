@@ -1,8 +1,10 @@
 package com.example.epidemicprevention.util;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,45 +25,55 @@ public class WrapperUtils {
         return queryWrapper;
     }
 
-    public static <T>UpdateWrapper<T> getUpdateWrapper(String key,Object value){
-        UpdateWrapper<T> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.eq(key,value);
+    public static <T> LambdaQueryWrapper<T> getLambdaQueryWrapper(SFunction<T, ?> column, Object value) {
+        return getLambdaQueryWrapper(true,column,value);
+    }
+
+    public static <T> LambdaQueryWrapper<T> getLambdaQueryWrapper(boolean condition, SFunction<T, ?> column, Object value) {
+        LambdaQueryWrapper<T> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(condition, column, value);
+        return lambdaQueryWrapper;
+    }
+
+    public static <T> UpdateWrapper<T> getUpdateWrapper(String key, Object value) {
+        UpdateWrapper<T> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq(key, value);
         return updateWrapper;
     }
 
     public static <T> QueryWrapper<T> queryWrapper(T object) {
-        QueryWrapper<T> queryWrapper=new QueryWrapper<>();
-        if(object!=null){
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        if (object != null) {
             Class<?> clz = object.getClass();
             Field[] fields = clz.getDeclaredFields();
-            for (Field field:fields){
+            for (Field field : fields) {
                 //判断该属性是否在数据表字段中
-                TableField tableField=field.getAnnotation(TableField.class);
-                if(tableField!=null){
-                    if(!tableField.exist()){
+                TableField tableField = field.getAnnotation(TableField.class);
+                if (tableField != null) {
+                    if (!tableField.exist()) {
                         continue;
                     }
                 }
-                if(field.getGenericType().toString().equals("class java.lang.String")){
+                if (field.getGenericType().toString().equals("class java.lang.String")) {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.like(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.like(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.eq(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.eq(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
@@ -75,44 +87,45 @@ public class WrapperUtils {
 
     /**
      * 通过VO类提取查询条件
+     *
      * @param object
      * @param <T>
      * @param <G>
      * @return
      */
-    public static <T,G> QueryWrapper<T> queryWrapperByQueryVO(G object) {
-        QueryWrapper<T> queryWrapper=new QueryWrapper<>();
-        if(object!=null){
+    public static <T, G> QueryWrapper<T> queryWrapperByQueryVO(G object) {
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        if (object != null) {
             Class<?> clz = object.getClass();
             Field[] fields = clz.getDeclaredFields();
-            for (Field field:fields){
+            for (Field field : fields) {
                 //判断该属性是否在数据表字段中
-                TableField tableField=field.getAnnotation(TableField.class);
-                if(tableField!=null){
-                    if(!tableField.exist()){
+                TableField tableField = field.getAnnotation(TableField.class);
+                if (tableField != null) {
+                    if (!tableField.exist()) {
                         continue;
                     }
                 }
-                if(field.getGenericType().toString().equals("class java.lang.String")){
+                if (field.getGenericType().toString().equals("class java.lang.String")) {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.like(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.like(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.eq(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.eq(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
@@ -125,37 +138,39 @@ public class WrapperUtils {
 
     /**
      * 通过VO类提取查询条件,忽略时间条件
+     *
      * @param object
      * @param <T>
      * @param <G>
      * @return
      */
-    public static <T,G> QueryWrapper<T> queryWrapperByQueryVONoTime(G object) {
-        QueryWrapper<T> queryWrapper=new QueryWrapper<>();
-        if(object!=null){
+    public static <T, G> QueryWrapper<T> queryWrapperByQueryVONoTime(G object) {
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        if (object != null) {
             Class<?> clz = object.getClass();
             Field[] fields = clz.getDeclaredFields();
-            for (Field field:fields){
+            for (Field field : fields) {
                 //判断该属性是否在数据表字段中
-                TableField tableField=field.getAnnotation(TableField.class);
-                if(tableField!=null){
-                    if(!tableField.exist()){
+                TableField tableField = field.getAnnotation(TableField.class);
+                if (tableField != null) {
+                    if (!tableField.exist()) {
                         continue;
                     }
                 }
-                if(field.getGenericType().toString().equals("class java.lang.String")){
+                if (field.getGenericType().toString().equals("class java.lang.String")) {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.like(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.like(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                }if(field.getGenericType().toString().equals("class java.sql.Timestamp")||field.getGenericType().toString().equals("class java.util.Date")){
+                }
+                if (field.getGenericType().toString().equals("class java.sql.Timestamp") || field.getGenericType().toString().equals("class java.util.Date")) {
 //                    Method m = null;
 //                    try {
 //                        m = (Method) object.getClass().getMethod(
@@ -167,14 +182,14 @@ public class WrapperUtils {
 //                    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 //                        e.printStackTrace();
 //                    }
-                }else {
+                } else {
                     Method m = null;
                     try {
                         m = (Method) object.getClass().getMethod(
                                 "get" + getMethodName(field.getName()));
-                        Object value=m.invoke(object);
-                        if(value!=null&&!value.toString().equals("null")){
-                            queryWrapper.eq(StringUtil.underscoreName(field.getName()),value);
+                        Object value = m.invoke(object);
+                        if (value != null && !value.toString().equals("null")) {
+                            queryWrapper.eq(StringUtil.underscoreName(field.getName()), value);
                         }
                     } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
@@ -186,7 +201,7 @@ public class WrapperUtils {
     }
 
     // 把一个字符串的第一个字母大写、效率是最高的、
-    private static String getMethodName(String fieldName){
+    private static String getMethodName(String fieldName) {
         byte[] items = fieldName.getBytes();
         items[0] = (byte) ((char) items[0] - 'a' + 'A');
         return new String(items);

@@ -1,6 +1,11 @@
 package com.example.epidemicprevention.module.user.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.epidemicprevention.annotation.UnLogin;
+import com.example.epidemicprevention.module.user.vo.AddUserVo;
+import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVo;
+import com.example.epidemicprevention.module.user.vo.UserChangePasswordVo;
+import com.example.epidemicprevention.module.user.vo.UserLoginVo;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.user.entity.User;
 import com.example.epidemicprevention.module.user.service.UserService;
@@ -19,6 +24,46 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    /**
+     * 登录
+     *
+     * @param userLoginVo
+     * @return
+     */
+    @ApiOperation("登录")
+    @PostMapping("/login")
+    @UnLogin
+    Result<Object> login(UserLoginVo userLoginVo){
+        return userService.login(userLoginVo);
+    }
+
+    @ApiOperation("修改密码")
+    @PutMapping("/changePassword")
+    @UnLogin
+    Result<Object> changePassword(@Validated @RequestBody UserChangePasswordVo userChangePasswordVo){
+        return userService.changePassword(userChangePasswordVo);
+    }
+
+    @ApiOperation("添加用户")
+    @PreAuthorize("hasRole('SUPER')")
+    @PostMapping("/addUser")
+    Result<Object> addUser(@Validated @RequestBody AddUserVo addUserVo){
+        return userService.addUser(addUserVo);
+    }
+
+    @ApiOperation("修改用户信息")
+    @PreAuthorize("hasRole('SUPER')")
+    @PutMapping("/changeUserInfo")
+    Result<Object> changeUserInfo(@Validated @RequestBody ChangeUserInfoVo changeUserInfoVo){
+        return userService.changeUserInfo(changeUserInfoVo);
+    }
+
+    @ApiOperation("删除用户")
+    @DeleteMapping("/deleteUser")
+    Result<Object> deleteUser(@RequestParam String id){
+        return userService.deleteUser(id);
+    }
 
     @ApiOperation("分页查询")
     @GetMapping("/page")
