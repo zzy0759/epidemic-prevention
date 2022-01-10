@@ -28,7 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -70,7 +72,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return Result.error(ResponseState.PASSWORD_IS_ERROR);
         }
         final String accessToken = jwtUtils.getAccessToken(user.getId(), user.getState() == User.NORMAL_NUMBER ? User.NORMAL_ROLE : User.SUPER_ROLE);
-        return Result.OK(accessToken);
+        Map<String,Object> data=new HashMap<>();
+        data.put("accessToken",accessToken);
+        data.put("id",user.getId());
+        return Result.OK(data);
     }
 
     @Override
