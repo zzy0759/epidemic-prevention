@@ -29,7 +29,6 @@ import java.util.List;
  * @author zzy
  * @since $date
  */
-@Validated
 @Service
 public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}> implements ${ClassName}Service {
 

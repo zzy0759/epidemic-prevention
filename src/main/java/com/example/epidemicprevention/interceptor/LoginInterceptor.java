@@ -41,14 +41,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("utf8");
         response.setContentType("text/json;charset = UTF-8");
-        // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        //检查是否有LoginToken注解，有则跳过认证
         if (method.isAnnotationPresent(UnLogin.class)) {
             UnLogin unLogin = method.getAnnotation(UnLogin.class);
             if (unLogin.value()) {
