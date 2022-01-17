@@ -1,6 +1,5 @@
 package com.example.epidemicprevention.module.patient.service;
 
-import com.example.epidemicprevention.module.patient.vo.PatientInsertVO;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.patient.entity.Patient;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,39 +16,38 @@ import java.util.List;
  * @date 2022-01-17
  */
 public interface PatientService extends IService<Patient> {
+
     /**
-     * 添加病例
-     * @return
+     * 分页查询
+     *
+     * @param current：页码
+     * @param size：每页条数
+     * @param patient：筛选条件
+     * @return IPage<Patient>
      */
-    Result<Object> insertPatient(PatientInsertVO patientInsertVO);
+    IPage<Patient> getPatientPage(Integer current, Integer size, Patient patient);
 
     /**
-    * 分页查询
-    * @param current：页码
-    * @param size：每页条数
-    * @param patient：筛选条件
-    * @return IPage<Patient>
-    */
-    IPage<Patient> getPatientPage(Integer current,Integer size,Patient patient);
-
-    /**
-    * 查询所有
-    * @param patient：筛选条件
-    * @return List<Patient>
-    */
+     * 查询所有
+     *
+     * @param patient：筛选条件
+     * @return List<Patient>
+     */
     List<Patient> getAll(Patient patient);
 
     /**
-    * 通过id删除
-    * @param id：patientId
-    * @return Result<Object>
-    */
+     * 通过id删除
+     *
+     * @param id：patientId
+     * @return Result<Object>
+     */
     Result<Object> deleteById(String id);
 
     /**
-    * 批量删除
-    * @param ids：id列表
-    * @return Result<Object>
-    */
+     * 批量删除
+     *
+     * @param ids：id列表
+     * @return Result<Object>
+     */
     Result<Object> batchDelete(List<String> ids);
 }
