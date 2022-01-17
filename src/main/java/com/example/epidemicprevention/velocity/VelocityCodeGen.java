@@ -39,9 +39,9 @@ public class VelocityCodeGen {
     private static final String PACKAGE_PATH = "com/example/epidemicprevention/module/";
 
     public void generateCodeModule(String type) throws IOException {
-        String moduleName = "user";
-        String tableName = "user";
-        String ClassName = "User";
+        String moduleName = "zeroPatient";
+        String tableName = "zero_patient";
+        String ClassName = "ZeroPatient";
         List<DBFiled> dbFiledList = dbMapper.getTable(DB_NAME, tableName);
         if (dbFiledList != null && dbFiledList.size() > 0) {
             for (DBFiled dbFiled : dbFiledList) {

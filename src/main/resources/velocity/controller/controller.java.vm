@@ -24,10 +24,10 @@ public class ${ClassName}Controller {
     @GetMapping("/page")
     @Deprecated
     public Result<IPage<${ClassName}>> get${ClassName}Page(
-        @RequestParam(name = "current", defaultValue = "1") Integer current,
-        @RequestParam(name = "size", defaultValue = "10") Integer size,
+            @RequestParam(name = "current", defaultValue = "1") Integer current,
+            @RequestParam(name = "size", defaultValue = "10") Integer size,
         ${ClassName} ${classname}) {
-        IPage<$ClassName> ${classname}Page=${classname}Service.get${ClassName}Page(current,size,${classname});
+        IPage<$ClassName> ${classname}Page = ${classname}Service.get${ClassName}Page(current, size,${classname});
         return Result.OK(${classname}Page);
     }
 
@@ -35,7 +35,7 @@ public class ${ClassName}Controller {
     @PutMapping
     @Deprecated
     public Result<${ClassName}> update(@Validated(${ClassName}.update.class) @RequestBody ${ClassName} ${classname}) {
-        ${classname}Service.updateById(${classname});
+            ${classname}Service.updateById(${classname});
         return Result.OK();
     }
 
@@ -43,14 +43,14 @@ public class ${ClassName}Controller {
     @PostMapping
     @Deprecated
     public Result<Object> add(@Validated(${ClassName}.insert.class) @RequestBody ${ClassName} ${classname}) {
-        ${classname}Service.save(${classname});
+            ${classname}Service.save(${classname});
         return Result.OK();
     }
 
     @ApiOperation("通过id查询")
     @GetMapping("/id")
     @Deprecated
-    public Result<${ClassName}> getById(@RequestParam String id){
+    public Result<${ClassName}> getById(@RequestParam String id) {
         $ClassName $classname=${classname}Service.getById(id);
         return Result.OK($classname);
     }
@@ -58,22 +58,22 @@ public class ${ClassName}Controller {
     @ApiOperation("查询所有")
     @GetMapping
     @Deprecated
-    public Result<List<${ClassName}>> getAll(${ClassName} ${classname}){
-        List<${ClassName}> ${classname}List=${classname}Service.getAll(${classname});
+    public Result<List<${ClassName}>> getAll(${ClassName} ${classname}) {
+        List<${ClassName}> ${classname}List = ${classname}Service.getAll(${classname});
         return Result.OK(${classname}List);
     }
 
     @ApiOperation("通过id删除")
     @DeleteMapping("/id")
     @Deprecated
-    public Result<Object> deleteById(@RequestParam String id){
+    public Result<Object> deleteById(@RequestParam String id) {
         return ${classname}Service.deleteById(id);
     }
 
     @ApiOperation("批量删除")
     @DeleteMapping("/batch")
     @Deprecated
-    public Result<Object> batchDelete(@RequestParam List<String> ids){
+    public Result<Object> batchDelete(@RequestParam List<String> ids) {
         return ${classname}Service.batchDelete(ids);
     }
 }

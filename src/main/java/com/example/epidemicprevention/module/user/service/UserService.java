@@ -1,9 +1,9 @@
 package com.example.epidemicprevention.module.user.service;
 
-import com.example.epidemicprevention.module.user.vo.AddUserVo;
-import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVo;
-import com.example.epidemicprevention.module.user.vo.UserChangePasswordVo;
-import com.example.epidemicprevention.module.user.vo.UserLoginVo;
+import com.example.epidemicprevention.module.user.vo.AddUserVO;
+import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVO;
+import com.example.epidemicprevention.module.user.vo.UserChangePasswordVO;
+import com.example.epidemicprevention.module.user.vo.UserLoginVO;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.user.entity.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -26,7 +26,7 @@ public interface UserService extends IService<User> {
      * @param userLoginVo
      * @return
      */
-    Result<Object> login(UserLoginVo userLoginVo);
+    Result<Object> login(UserLoginVO userLoginVo);
 
     /**
      * 修改密码
@@ -34,7 +34,7 @@ public interface UserService extends IService<User> {
      * @param userChangePasswordVo
      * @return
      */
-    Result<Object> changePassword(UserChangePasswordVo userChangePasswordVo);
+    Result<Object> changePassword(UserChangePasswordVO userChangePasswordVo);
 
     /**
      * 添加用户
@@ -42,7 +42,7 @@ public interface UserService extends IService<User> {
      * @param addUserVo
      * @return
      */
-    Result<Object> addUser(AddUserVo addUserVo);
+    Result<Object> addUser(AddUserVO addUserVo);
 
     /**
      * 修改用户信息
@@ -50,7 +50,7 @@ public interface UserService extends IService<User> {
      * @param changeUserInfoVo
      * @return
      */
-    Result<Object> changeUserInfo(ChangeUserInfoVo changeUserInfoVo);
+    Result<Object> changeUserInfo(ChangeUserInfoVO changeUserInfoVo);
 
     /**
      * 删除用户

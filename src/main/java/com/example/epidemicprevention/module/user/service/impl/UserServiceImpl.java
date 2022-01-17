@@ -10,24 +10,19 @@ import com.example.epidemicprevention.module.user.entity.User;
 import com.example.epidemicprevention.module.user.mapper.UserMapper;
 import com.example.epidemicprevention.module.user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.epidemicprevention.module.user.vo.AddUserVo;
-import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVo;
-import com.example.epidemicprevention.module.user.vo.UserChangePasswordVo;
-import com.example.epidemicprevention.module.user.vo.UserLoginVo;
+import com.example.epidemicprevention.module.user.vo.AddUserVO;
+import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVO;
+import com.example.epidemicprevention.module.user.vo.UserChangePasswordVO;
+import com.example.epidemicprevention.module.user.vo.UserLoginVO;
 import com.example.epidemicprevention.response.ResponseState;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.util.JwtUtils;
 import com.example.epidemicprevention.util.WrapperUtils;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.val;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result<Object> login(UserLoginVo userLoginVo) {
+    public Result<Object> login(UserLoginVO userLoginVo) {
         final String username = userLoginVo.getUsername();
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, username);
@@ -78,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result<Object> changePassword(UserChangePasswordVo userChangePasswordVo) {
+    public Result<Object> changePassword(UserChangePasswordVO userChangePasswordVo) {
         //fixme java还能这样写?奇怪的知识又增加了
         val id = userChangePasswordVo.getId();
         val user = userMapper.selectById(id);
@@ -91,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result<Object> addUser(AddUserVo addUserVo) {
+    public Result<Object> addUser(AddUserVO addUserVo) {
         final String username = addUserVo.getUsername();
         final Integer count = userMapper.selectCount(WrapperUtils.getLambdaQueryWrapper(User::getUsername, username));
         if (count != 0) {
@@ -109,7 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result<Object> changeUserInfo(ChangeUserInfoVo changeUserInfoVo) {
+    public Result<Object> changeUserInfo(ChangeUserInfoVO changeUserInfoVo) {
         User user = new User();
         user.setId(changeUserInfoVo.getId());
         user.setPassword(passwordEncoder.encode(changeUserInfoVo.getPassword()));

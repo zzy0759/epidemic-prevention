@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
  * @Date 2022/1/6
  */
 @Data
-public class ChangeUserInfoVo {
+public class ChangeUserInfoVO {
     private static final String PASSWORD_FORMAT_ERROR = "密码8-16个字符,不包含空格,必须包含数字,字母或字符至少两种";
     @NotBlank
     private String id;

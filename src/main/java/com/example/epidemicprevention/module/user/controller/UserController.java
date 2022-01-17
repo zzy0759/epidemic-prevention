@@ -2,10 +2,10 @@ package com.example.epidemicprevention.module.user.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.epidemicprevention.annotation.UnLogin;
-import com.example.epidemicprevention.module.user.vo.AddUserVo;
-import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVo;
-import com.example.epidemicprevention.module.user.vo.UserChangePasswordVo;
-import com.example.epidemicprevention.module.user.vo.UserLoginVo;
+import com.example.epidemicprevention.module.user.vo.AddUserVO;
+import com.example.epidemicprevention.module.user.vo.ChangeUserInfoVO;
+import com.example.epidemicprevention.module.user.vo.UserChangePasswordVO;
+import com.example.epidemicprevention.module.user.vo.UserLoginVO;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.user.entity.User;
 import com.example.epidemicprevention.module.user.service.UserService;
@@ -34,28 +34,28 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     @UnLogin
-    Result<Object> login(@RequestBody UserLoginVo userLoginVo){
+    Result<Object> login(@RequestBody UserLoginVO userLoginVo){
         return userService.login(userLoginVo);
     }
 
     @ApiOperation("修改密码")
     @PutMapping("/changePassword")
     @UnLogin
-    Result<Object> changePassword(@Validated @RequestBody UserChangePasswordVo userChangePasswordVo){
+    Result<Object> changePassword(@Validated @RequestBody UserChangePasswordVO userChangePasswordVo){
         return userService.changePassword(userChangePasswordVo);
     }
 
     @ApiOperation("添加用户")
     @PreAuthorize("hasRole('SUPER')")
     @PostMapping("/addUser")
-    Result<Object> addUser(@Validated @RequestBody AddUserVo addUserVo){
+    Result<Object> addUser(@Validated @RequestBody AddUserVO addUserVo){
         return userService.addUser(addUserVo);
     }
 
     @ApiOperation("修改用户信息")
     @PreAuthorize("hasRole('SUPER')")
     @PutMapping("/changeUserInfo")
-    Result<Object> changeUserInfo(@Validated @RequestBody ChangeUserInfoVo changeUserInfoVo){
+    Result<Object> changeUserInfo(@Validated @RequestBody ChangeUserInfoVO changeUserInfoVo){
         return userService.changeUserInfo(changeUserInfoVo);
     }
 

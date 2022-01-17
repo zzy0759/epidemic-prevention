@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
  * @Date 2022/1/6
  */
 @Data
-public class UserLoginVo {
+public class UserLoginVO {
     @NotBlank
     private String username;
     @NotBlank
