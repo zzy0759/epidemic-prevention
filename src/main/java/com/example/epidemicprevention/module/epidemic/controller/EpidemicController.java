@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * @Author ZZY
  * @Date 2022/1/17
@@ -23,10 +24,18 @@ public class EpidemicController {
     @Autowired
     private EpidemicService epidemicService;
 
-    @PostMapping("/add")
     @ApiOperation("添加疫情")
+    @PostMapping("/add")
     public Result<Object> addEpidemic(@RequestBody @Validated EpidemicAddVO epidemicAddVo) {
         return epidemicService.insertEpidemic(epidemicAddVo);
+    }
+
+    @ApiOperation("根据条件筛选出疫情对应的病例人数")
+    @GetMapping("/selectEpidemicWithPatientCount")
+    public Result<Object> selectEpidemicWithPatientCount(@RequestParam String name,
+                                                         @RequestParam(name = "current", defaultValue = "1") Integer current,
+                                                         @RequestParam(name = "size", defaultValue = "10") Integer size) {
+        return epidemicService.selectEpidemicWithPatientCount(name, current, size);
     }
 
     @ApiOperation("分页查询")

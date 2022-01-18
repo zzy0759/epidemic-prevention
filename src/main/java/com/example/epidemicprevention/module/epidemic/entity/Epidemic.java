@@ -1,6 +1,7 @@
 package com.example.epidemicprevention.module.epidemic.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -49,6 +50,10 @@ public interface update {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp updateTime;
+
+    @ApiModelProperty(value = "病例数量")
+    @TableField(exist = false)
+    private Integer patientCount;
 
     @ApiModelProperty(value = "1删除0未删除")
     private Integer isDelete;

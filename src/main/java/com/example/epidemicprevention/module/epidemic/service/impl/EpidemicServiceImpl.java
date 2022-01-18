@@ -16,7 +16,9 @@ import com.example.epidemicprevention.util.WrapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,6 +45,21 @@ public class EpidemicServiceImpl extends ServiceImpl<EpidemicMapper, Epidemic> i
         Epidemic epidemic = new Epidemic(epidemicAddVo.getName(), epidemicAddVo.getSeverityGrade(), epidemicAddVo.getStatus());
         epidemicMapper.insert(epidemic);
         return Result.OK();
+    }
+
+    /**
+     * 根据条件筛选出疫情对应的病例人数
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public Result<Object> selectEpidemicWithPatientCount(String name, Integer current, Integer size) {
+        Map<String, Object> params = new HashMap<>(5);
+        params.put("name", name);
+        Page<Epidemic> epidemicPage = new Page<>(current, size);
+        final Page<Epidemic> page = epidemicMapper.selectEpidemicWithPatientCount(epidemicPage, params);
+        return Result.OK(page);
     }
 
     /**

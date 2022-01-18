@@ -26,6 +26,16 @@ public interface EpidemicService extends IService<Epidemic> {
     Result<Object> insertEpidemic(EpidemicAddVO epidemicAddVo);
 
     /**
+     * 根据条件筛选出疫情对应的病例人数
+     *
+     * @param name
+     * @param current
+     * @param size
+     * @return
+     */
+    Result<Object> selectEpidemicWithPatientCount(String name, Integer current, Integer size);
+
+    /**
      * 分页查询
      *
      * @param current：页码

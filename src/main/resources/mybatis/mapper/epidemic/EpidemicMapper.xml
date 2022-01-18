@@ -2,4 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.epidemicprevention.module.epidemic.mapper.EpidemicMapper">
 
+    <resultMap id="selectEpidemicWithPatientCount" type="com.example.epidemicprevention.module.epidemic.entity.Epidemic"
+               autoMapping="true">
+        <result property="patientCount" column="patientCount"/>
+    </resultMap>
+    <select id="selectEpidemicWithPatientCount" resultMap="selectEpidemicWithPatientCount">
+        select e.*,
+        p.count as patientCount
+        from epidemic e
+        left join (select id, count(*) as count, epidemic_id from patient) p on e.id = p.epidemic_id
+        <where>
+            <if test="params.name!=null">
+                and e.name like '%${params.name}%'
+            </if>
+        </where>
+    </select>
 </mapper>
