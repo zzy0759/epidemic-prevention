@@ -26,7 +26,7 @@ public class VelocityCodeGen {
 
     @Autowired
     private DBMapper dbMapper;
-    private static final String ROOT_PATH = "E:/项目/epidemic-prevention/src/main/";
+    private static final String ROOT_PATH = "D:\\soft\\java\\项目\\epidemic-prevention/epidemic-prevention/src/main/";
 
     private static final String AUTHOR = "zzy";
 
@@ -39,9 +39,9 @@ public class VelocityCodeGen {
     private static final String PACKAGE_PATH = "com/example/epidemicprevention/module/";
 
     public void generateCodeModule(String type) throws IOException {
-        String moduleName = "zeroPatient";
-        String tableName = "zero_patient";
-        String ClassName = "ZeroPatient";
+        String moduleName = "caseRecord";
+        String tableName = "case_record";
+        String ClassName = "CaseRecord";
         List<DBFiled> dbFiledList = dbMapper.getTable(DB_NAME, tableName);
         if (dbFiledList != null && dbFiledList.size() > 0) {
             for (DBFiled dbFiled : dbFiledList) {
