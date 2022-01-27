@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.epidemicprevention.module.news.mapper.NewsMapper">
 
+    <resultMap id="newsPage" type="com.example.epidemicprevention.module.news.entity.News" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="epidemic" javaType="com.example.epidemicprevention.module.epidemic.entity.Epidemic">
+            <id property="id" column="epidemicId"/>
+            <result property="name" column="epidemicName"/>
+        </association>
+    </resultMap>
+    <select id="newsPage" resultMap="newsPage">
+        select news.*,
+        e.id as epidemicId,
+        e.name as epidemicName
+        from news
+        left join epidemic e on e.id = news.epidemic_id
+        <where>
+            <if test="params.epidemicName!=null">
+                and e.name=#{params.epidemicName}
+            </if>
+        </where>
+    </select>
 </mapper>

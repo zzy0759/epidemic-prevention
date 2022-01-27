@@ -1,8 +1,10 @@
 package com.example.epidemicprevention.module.news.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.epidemicprevention.module.epidemic.entity.Epidemic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,5 +53,12 @@ public interface update {
     @ApiModelProperty(value = "是否可信1可信,0不可信")
     private Integer credible;
 
+    @ApiModelProperty(value = "疫情id")
+    private String epidemicId;
 
-        }
+    @TableField(exist = false)
+    private Epidemic epidemic;
+
+    @ApiModelProperty(value = "关键段落")
+    private String keywords;
+}

@@ -21,11 +21,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- *  News服务实现类
+ * News服务实现类
  * </p>
  *
  * @author zzy
@@ -38,14 +40,32 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     private NewsMapper newsMapper;
 
     /**
+     * 新闻分页,根据疫情种类分页查询
+     *
+     * @param epidemicName
+     * @param current
+     * @param size
+     * @return
+     */
+    @Override
+    public Result<Object> newsPage(String epidemicName, Integer current, Integer size) {
+        Page<News> page = new Page<>(current, size);
+        Map<String, Object> params = new HashMap<>(2);
+        params.put("epidemicName", epidemicName);
+        final Page<News> newsPage = newsMapper.newsPage(page, params);
+        return Result.OK(newsPage);
+    }
+
+    /**
      * 分页查询
+     *
      * @param current：页码
      * @param size：每页条数
      * @param news：筛选条件
      * @return IPage<News>
      */
     @Override
-    public IPage<News> getNewsPage(Integer current, Integer size,News news) {
+    public IPage<News> getNewsPage(Integer current, Integer size, News news) {
         QueryWrapper<News> queryWrapper = WrapperUtils.queryWrapper(news);
         Page<News> newsPage = new Page<>(current, size);
         IPage<News> newsIPage = newsMapper.selectPage(newsPage, queryWrapper);
@@ -54,6 +74,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
 
     /**
      * 查询所有
+     *
      * @param news：筛选条件
      * @return List<News>
      */
@@ -65,29 +86,31 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
 
     /**
      * 通过id删除
+     *
      * @param id：newsId
      * @return Result<Object>
      */
     @Override
     public Result<Object> deleteById(String id) {
-        News news=newsMapper.selectById(id);
-        if (news==null){
+        News news = newsMapper.selectById(id);
+        if (news == null) {
             return Result.error(ResponseState.TARGET_NOT_EXIST.getValue(), ResponseState.TARGET_NOT_EXIST.getMessage());
         }
-            newsMapper.deleteById(id);
+        newsMapper.deleteById(id);
         return Result.OK();
     }
 
     /**
-    * 批量删除
-    * @param ids：id列表
-    * @return Result<Object>
-    */
+     * 批量删除
+     *
+     * @param ids：id列表
+     * @return Result<Object>
+     */
     @Override
     public Result<Object> batchDelete(List<String> ids) {
         UpdateWrapper<News> updateWrapper = new UpdateWrapper<>();
         updateWrapper.in("id", ids);
-            newsMapper.delete(updateWrapper);
+        newsMapper.delete(updateWrapper);
         return Result.OK();
     }
 }

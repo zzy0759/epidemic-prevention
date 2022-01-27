@@ -20,14 +20,23 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
+    @ApiOperation("分页查询,根据疫情分页")
+    @GetMapping("/newsPage")
+    public Result<Object> newsPage(
+            @RequestParam(required = false) String epidemicName,
+            @RequestParam(name = "current", defaultValue = "1") Integer current,
+            @RequestParam(name = "size", defaultValue = "10") Integer size) {
+        return newsService.newsPage(epidemicName, current, size);
+    }
+
     @ApiOperation("分页查询")
     @GetMapping("/page")
     @Deprecated
     public Result<IPage<News>> getNewsPage(
             @RequestParam(name = "current", defaultValue = "1") Integer current,
             @RequestParam(name = "size", defaultValue = "10") Integer size,
-        News news) {
-        IPage<News> newsPage = newsService.getNewsPage(current, size,news);
+            News news) {
+        IPage<News> newsPage = newsService.getNewsPage(current, size, news);
         return Result.OK(newsPage);
     }
 
@@ -35,11 +44,11 @@ public class NewsController {
     @PutMapping
     @Deprecated
     public Result<News> update(@Validated(News.update.class) @RequestBody News news) {
-            newsService.updateById(news);
+        newsService.updateById(news);
         return Result.OK();
     }
 
-//    @ApiOperation("新增")
+    //    @ApiOperation("新增")
 //    @PostMapping
 //    @Deprecated
 //    public Result<Object> add(@Validated(News.insert.class) @RequestBody News news) {
