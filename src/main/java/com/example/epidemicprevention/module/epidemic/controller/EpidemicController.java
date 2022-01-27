@@ -1,6 +1,7 @@
 package com.example.epidemicprevention.module.epidemic.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.epidemicprevention.annotation.UnLogin;
 import com.example.epidemicprevention.module.epidemic.vo.EpidemicAddVO;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.epidemic.entity.Epidemic;
@@ -23,6 +24,13 @@ import java.util.List;
 public class EpidemicController {
     @Autowired
     private EpidemicService epidemicService;
+
+    @UnLogin
+    @ApiOperation("获取疫情数量")
+    @GetMapping("/number")
+    public Result<Object> getNumber(){
+        return epidemicService.getNumber();
+    }
 
     @ApiOperation("添加疫情")
     @PostMapping("/add")

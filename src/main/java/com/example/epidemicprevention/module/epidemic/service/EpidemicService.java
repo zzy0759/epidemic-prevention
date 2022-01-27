@@ -68,4 +68,6 @@ public interface EpidemicService extends IService<Epidemic> {
      * @return Result<Object>
      */
     Result<Object> batchDelete(List<String> ids);
+
+    Result<Object> getNumber();
 }

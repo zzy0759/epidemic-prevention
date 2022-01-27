@@ -118,4 +118,14 @@ public class EpidemicServiceImpl extends ServiceImpl<EpidemicMapper, Epidemic> i
         epidemicMapper.delete(updateWrapper);
         return Result.OK();
     }
+
+    @Override
+    public Result<Object> getNumber() {
+        int total=epidemicMapper.selectCount(new QueryWrapper<>())-1;
+        int ing=epidemicMapper.selectCount(WrapperUtils.getQueryWrapper("status",1));
+        Map<String,Object> data=new HashMap<>();
+        data.put("total",total);
+        data.put("ing",ing);
+        return Result.OK(data);
+    }
 }
