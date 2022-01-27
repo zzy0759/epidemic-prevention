@@ -50,7 +50,7 @@ public interface update {
     @ApiModelProperty(value = "content")
     private String content;
 
-    @ApiModelProperty(value = "是否可信1可信,0不可信")
+    @ApiModelProperty(value = "1真实、2虚假、3未知")
     private Integer credible;
 
     @ApiModelProperty(value = "疫情id")
