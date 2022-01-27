@@ -22,8 +22,9 @@ class EpidemicPreventionApplicationTests {
     }
     @Test
     void password(){
-        System.out.println(passwordEncoder.encode("123456"));
+//        System.out.println(passwordEncoder.encode("123456"));
 //        System.out.println(passwordEncoder.matches("12345abc", "$10$w/YxaQWKbIOzONhf2x6/rug0RbBhrSc5eSspwkpjSKoXkP.RyzkAW"));
+        System.out.println(passwordEncoder.encode("abc123456"));
     }
 
 }
