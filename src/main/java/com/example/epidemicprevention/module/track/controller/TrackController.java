@@ -1,6 +1,7 @@
 package com.example.epidemicprevention.module.track.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.epidemicprevention.module.track.mapper.TrackMapper;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.track.entity.Track;
 import com.example.epidemicprevention.module.track.service.TrackService;
@@ -19,6 +20,8 @@ import java.util.List;
 public class TrackController {
     @Autowired
     private TrackService trackService;
+    @Autowired
+    private TrackMapper trackMapper;
 
     @ApiOperation("分页查询")
     @GetMapping("/page")
@@ -55,11 +58,10 @@ public class TrackController {
         return Result.OK(track);
     }
 
-    @ApiOperation("查询所有")
+    @ApiOperation("按时间降序查询轨迹")
     @GetMapping
-    @Deprecated
-    public Result<List<Track>> getAll(Track track) {
-        List<Track> trackList = trackService.getAll(track);
+    public Result<List<Track>> getAll(@RequestParam String patientId) {
+        List<Track> trackList = trackMapper.trackListDesc(patientId);
         return Result.OK(trackList);
     }
 

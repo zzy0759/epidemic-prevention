@@ -16,5 +16,7 @@ import java.util.List;
  */
 @Mapper
 public interface VehicleMapper extends BaseMapper<Vehicle> {
+    List<Vehicle> vehicleListDesc(String patientId);
+    List<Vehicle> vehicleListAsc(String patientId);
 
 }

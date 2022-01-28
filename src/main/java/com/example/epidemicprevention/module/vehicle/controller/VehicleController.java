@@ -1,6 +1,7 @@
 package com.example.epidemicprevention.module.vehicle.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.epidemicprevention.module.vehicle.mapper.VehicleMapper;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.vehicle.entity.Vehicle;
 import com.example.epidemicprevention.module.vehicle.service.VehicleService;
@@ -19,6 +20,8 @@ import java.util.List;
 public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
+    @Autowired
+    private VehicleMapper vehicleMapper;
 
     @ApiOperation("分页查询")
     @GetMapping("/page")
@@ -26,8 +29,8 @@ public class VehicleController {
     public Result<IPage<Vehicle>> getVehiclePage(
             @RequestParam(name = "current", defaultValue = "1") Integer current,
             @RequestParam(name = "size", defaultValue = "10") Integer size,
-        Vehicle vehicle) {
-        IPage<Vehicle> vehiclePage = vehicleService.getVehiclePage(current, size,vehicle);
+            Vehicle vehicle) {
+        IPage<Vehicle> vehiclePage = vehicleService.getVehiclePage(current, size, vehicle);
         return Result.OK(vehiclePage);
     }
 
@@ -35,7 +38,7 @@ public class VehicleController {
     @PutMapping
     @Deprecated
     public Result<Vehicle> update(@Validated(Vehicle.update.class) @RequestBody Vehicle vehicle) {
-            vehicleService.updateById(vehicle);
+        vehicleService.updateById(vehicle);
         return Result.OK();
     }
 
@@ -43,7 +46,7 @@ public class VehicleController {
     @PostMapping
     @Deprecated
     public Result<Object> add(@Validated(Vehicle.insert.class) @RequestBody Vehicle vehicle) {
-            vehicleService.save(vehicle);
+        vehicleService.save(vehicle);
         return Result.OK();
     }
 
@@ -51,15 +54,19 @@ public class VehicleController {
     @GetMapping("/id")
     @Deprecated
     public Result<Vehicle> getById(@RequestParam String id) {
-        Vehicle vehicle=vehicleService.getById(id);
+        Vehicle vehicle = vehicleService.getById(id);
         return Result.OK(vehicle);
     }
 
-    @ApiOperation("查询所有")
+    @ApiOperation("通过时间查询,option1降序,其他升序")
     @GetMapping
-    @Deprecated
-    public Result<List<Vehicle>> getAll(Vehicle vehicle) {
-        List<Vehicle> vehicleList = vehicleService.getAll(vehicle);
+    public Result<List<Vehicle>> getAll(@RequestParam String patientId, @RequestParam Integer option) {
+        List<Vehicle> vehicleList;
+        if (option == 1) {
+            vehicleList = vehicleMapper.vehicleListDesc(patientId);
+        } else {
+            vehicleList = vehicleMapper.vehicleListAsc(patientId);
+        }
         return Result.OK(vehicleList);
     }
 

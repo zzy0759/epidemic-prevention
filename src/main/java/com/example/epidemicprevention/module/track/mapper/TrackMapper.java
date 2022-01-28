@@ -16,5 +16,5 @@ import java.util.List;
  */
 @Mapper
 public interface TrackMapper extends BaseMapper<Track> {
-
+    List<Track> trackListDesc(String patientId);
 }

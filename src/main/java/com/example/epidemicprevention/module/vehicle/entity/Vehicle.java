@@ -39,5 +39,8 @@ public interface update {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
 
+    @ApiModelProperty(value = "病人id")
+    private String patientId;
+
 
 }
