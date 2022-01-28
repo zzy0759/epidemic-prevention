@@ -6,12 +6,12 @@
         select *
         from vehicle
         where patient_id = #{patientId}
-        order by create_time desc
+        order by vehicle_time desc
     </select>
     <select id="vehicleListAsc" resultType="com.example.epidemicprevention.module.vehicle.entity.Vehicle">
         select *
         from vehicle
         where patient_id = #{patientId}
-        order by create_time
+        order by vehicle_time
     </select>
 </mapper>
