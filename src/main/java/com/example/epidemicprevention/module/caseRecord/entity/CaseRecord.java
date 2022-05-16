@@ -29,7 +29,7 @@ public interface update {
 
     @ApiModelProperty(value = "id")
     @TableId(type = IdType.UUID)
-    private Integer id;
+    private String id;
 
     @ApiModelProperty(value = "新增人数")
     private int newNumber;

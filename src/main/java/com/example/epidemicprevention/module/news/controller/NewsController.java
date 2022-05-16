@@ -1,6 +1,9 @@
 package com.example.epidemicprevention.module.news.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.epidemicprevention.module.news.mapper.NewsMapper;
 import com.example.epidemicprevention.response.Result;
 import com.example.epidemicprevention.module.news.entity.News;
 import com.example.epidemicprevention.module.news.service.NewsService;
@@ -19,6 +22,14 @@ import java.util.List;
 public class NewsController {
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private NewsMapper newsMapper;
+
+    @ApiOperation("获取最新新闻")
+    @GetMapping("/getLastNew")
+    public Result<Object> getLastNew(){
+        return Result.OK(newsMapper.lastNew());
+    }
 
     @ApiOperation("分页查询,根据疫情分页")
     @GetMapping("/newsPage")

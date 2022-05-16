@@ -30,13 +30,13 @@ public class User {
     public interface update {
     }
 
-    public static int VALID_STATUS = 1;
-    public static int INVALID_STATUS = 0;
-    public static int NORMAL_NUMBER = 1;
-    public static int SUPER_NUMBER = 2;
-    public static String NORMAL_ROLE = "NORMAL";
-    public static String SUPER_ROLE = "SUPER";
-    public static String DEFAULT_PASSWORD = "abc123456";
+    public static final int VALID_STATUS = 1;
+    public static final int INVALID_STATUS = 0;
+    public static final int NORMAL_NUMBER = 1;
+    public static final int SUPER_NUMBER = 2;
+    public static final String NORMAL_ROLE = "NORMAL";
+    public static final String SUPER_ROLE = "SUPER";
+    public static final String DEFAULT_PASSWORD = "abc123456";
 
     @ApiModelProperty(value = "用户表")
     @TableId(type = IdType.UUID)

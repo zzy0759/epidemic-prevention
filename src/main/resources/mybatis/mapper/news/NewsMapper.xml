@@ -21,4 +21,7 @@
             </if>
         </where>
     </select>
+    <select id="lastNew" resultType="com.example.epidemicprevention.module.news.entity.News">
+        select * from news where id = (select max(id) from news)
+    </select>
 </mapper>

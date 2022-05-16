@@ -21,4 +21,5 @@ import java.util.Map;
 @Mapper
 public interface NewsMapper extends BaseMapper<News> {
     Page<News> newsPage(Page<News> page, @Param("params") Map<String, Object> params);
+    News lastNew();
 }
